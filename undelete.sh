@@ -147,7 +147,7 @@ function regexbuild(){
   fi
   #printf "\nRegex:\n${blue}^/%s$ ${normal}\n\n" "$regex"
   printf "\n${green}Great!${normal} First thing we will do is a dry-run, this will not actually recover any files, just check if we can find any files matching the regex.\n"
-  sleep 5
+  read -rsp "Press Enter to continue..."
   dryrun
   checkresult
 }
