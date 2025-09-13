@@ -72,7 +72,7 @@ function syntaxcheck(){
     exit 1 
   fi
   # Check if the destination provided is a directory and that it's writable
-  if [[ ! -d $dst && ! -w $dst ]]; then 
+  if [[ ! -d $dst || ! -w $dst ]]; then 
     titler "Undelete-BTRFS | Destination check failed"
     printf "${red}Error: ${blue}%s${yellow} doesn't exist or is not a writable directory! \nCheck your destination (create it if necessary) and try again\n\n" "$dst"
     printf "Exiting...\n${normal}"
@@ -102,8 +102,10 @@ function regexbuild(){
   printf " -> How to write it: ${white}/documents/daniel.txt${normal}\n"
   printf "•Example of a ${blue}directory${normal} path on a mounted filesystem: ${white}/data/pictures/important/${normal}\n"
   printf " -> How to write it: ${white}/pictures/important/${normal}\n"
-  printf "•Maybe you want recover for instance all ${blue}files with extension${normal} .jpeg in a directory?\n"
-  printf " -> How to write it: ${white}/pictures/.*.jpeg${normal}\n\n"
+  printf "•What if you want recover for instance all ${blue}files with extension${normal} .jpeg in that same directory?\n"
+  printf " -> How to write it: ${white}/pictures/.*.jpeg${normal}\n"
+  printf "•Finally, what if you want to recover ${blue}everything possible, regardless of path/name?${normal}\n"
+  printf " -> How to write it: ${white}.*${normal}\n\n"
   read -er -p "Enter the path to a file or directory, following the rules above: " filepath
   while [[ -z "$filepath" ]]; do
     printf "\n${red}Err: No input given, try again.\n${normal}"
@@ -147,7 +149,7 @@ function regexbuild(){
   fi
   #printf "\nRegex:\n${blue}^/%s$ ${normal}\n\n" "$regex"
   printf "\n${green}Great!${normal} First thing we will do is a dry-run, this will not actually recover any files, just check if we can find any files matching the regex.\n"
-  sleep 5
+  read -rsp "Press Enter to continue..."
   dryrun
   checkresult
 }
@@ -155,6 +157,7 @@ function regexbuild(){
 function dryrun(){
   # This is where we do the dryrun of BTRFS, this is used to quickly check if we can find the file using the provided regexbuild
   # much faster than doing an actual restore.
+  mountcheck
   clear
   titler "Undelete-BTRFS | Dry-run | Depth-level: ${depth}"
   printf "Performing a dry-run recovery with the provided path.\n${yellow}This is not recovering any files, just checking if files can be found${normal}\n"
@@ -239,6 +242,7 @@ function checkresult(){
 }
 
 function generateroots(){
+  mountcheck
   clear
   titler "Undelete-BTRFS | Generating roots | Depth-level ${depth}"
   if [[ $depth -eq 1 || $depth -eq 0 ]]; then
@@ -266,6 +270,7 @@ function generateroots(){
 
 function recover(){
   # Attempt recovery of files
+  mountcheck
   clear
   titler "Undelete-BTRFS | Recovering files | Depth-level: ${depth}"
   if [[ $depth = "0" ]]; then
