@@ -155,6 +155,7 @@ function regexbuild(){
 function dryrun(){
   # This is where we do the dryrun of BTRFS, this is used to quickly check if we can find the file using the provided regexbuild
   # much faster than doing an actual restore.
+  mountcheck
   clear
   titler "Undelete-BTRFS | Dry-run | Depth-level: ${depth}"
   printf "Performing a dry-run recovery with the provided path.\n${yellow}This is not recovering any files, just checking if files can be found${normal}\n"
@@ -239,6 +240,7 @@ function checkresult(){
 }
 
 function generateroots(){
+  mountcheck
   clear
   titler "Undelete-BTRFS | Generating roots | Depth-level ${depth}"
   if [[ $depth -eq 1 || $depth -eq 0 ]]; then
@@ -266,6 +268,7 @@ function generateroots(){
 
 function recover(){
   # Attempt recovery of files
+  mountcheck
   clear
   titler "Undelete-BTRFS | Recovering files | Depth-level: ${depth}"
   if [[ $depth = "0" ]]; then
