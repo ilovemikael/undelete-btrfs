@@ -4,7 +4,7 @@ The longer a file has existed prior to being deleted, the more likely it is to b
 
 You may also end up recovering an older version of the file. The script will try to recover the most recent version but there's no guarantee the most recent recoverable version is the most recent version of the file.
 
-Script has been tested and confirmed working with btrfs-progs version: `v5.19.1` (script should also work on older versions)
+Script has been tested and confirmed working with btrfs-progs version: `v6.16.1` (script should also work on older versions)
 
 ## Syntax
 Syntax: ```./undelete.sh <source dev> <recovery destination>```
