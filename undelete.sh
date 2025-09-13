@@ -72,7 +72,7 @@ function syntaxcheck(){
     exit 1 
   fi
   # Check if the destination provided is a directory and that it's writable
-  if [[ ! -d $dst && ! -w $dst ]]; then 
+  if [[ ! -d $dst || ! -w $dst ]]; then 
     titler "Undelete-BTRFS | Destination check failed"
     printf "${red}Error: ${blue}%s${yellow} doesn't exist or is not a writable directory! \nCheck your destination (create it if necessary) and try again\n\n" "$dst"
     printf "Exiting...\n${normal}"
