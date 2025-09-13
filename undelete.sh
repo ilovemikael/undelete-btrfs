@@ -102,8 +102,10 @@ function regexbuild(){
   printf " -> How to write it: ${white}/documents/daniel.txt${normal}\n"
   printf "•Example of a ${blue}directory${normal} path on a mounted filesystem: ${white}/data/pictures/important/${normal}\n"
   printf " -> How to write it: ${white}/pictures/important/${normal}\n"
-  printf "•Maybe you want recover for instance all ${blue}files with extension${normal} .jpeg in a directory?\n"
-  printf " -> How to write it: ${white}/pictures/.*.jpeg${normal}\n\n"
+  printf "•What if you want recover for instance all ${blue}files with extension${normal} .jpeg in that same directory?\n"
+  printf " -> How to write it: ${white}/pictures/.*.jpeg${normal}\n"
+  printf "•Finally, what if you want to recover ${blue}everything possible, regardless of path/name?${normal}\n"
+  printf " -> How to write it: ${white}.*${normal}\n\n"
   read -er -p "Enter the path to a file or directory, following the rules above: " filepath
   while [[ -z "$filepath" ]]; do
     printf "\n${red}Err: No input given, try again.\n${normal}"
